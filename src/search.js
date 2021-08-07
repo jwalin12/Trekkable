@@ -7,12 +7,17 @@ function renderHikePage(value) {
 
 }
 
+
+function showSearches(value) {
+
+}
+
 const SearchBar = () => (
 <SearchField
   placeholder="Find your next hike!"
   searchText="Find your next hike!"
   classNames="hike-search-bar"
-  onSearchClick={renderHikePage}
+  onSearchClick={showSearches}
 />
 );
 
