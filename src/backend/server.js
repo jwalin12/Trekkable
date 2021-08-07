@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const hikesRouter = require('./routes/hikes')
 require('dotenv').config();
 
 
@@ -22,6 +23,7 @@ const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 })
+app.use('/hikes', hikesRouter)
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
