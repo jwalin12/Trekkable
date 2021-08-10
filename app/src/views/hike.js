@@ -30,21 +30,19 @@ function genEntry({key, value}) {
     <Center>
       {key}
     </Center>
-
     <Center>
       {value}
     </Center>
   </HStack>
 
-  )
+  );
 }
 
 function Basic() {
-
   const tableEntries = props.map(genEntry)
   return (<VStack>
     {tableEntries}
-    </VStack>)
+    </VStack>);
 
 }
 

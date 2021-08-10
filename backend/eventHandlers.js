@@ -1,5 +1,6 @@
 import axios from 'axios'
 import EmptyHike from '../app/src/views/emptyHike'
+import Hike from '../app/src/views/hike'
 
 const searchForHikeHandler = (input) => {
     //make request to get hike info
@@ -12,9 +13,7 @@ const searchForHikeHandler = (input) => {
             return EmptyHike()
 
         } else {
-
-
-            
+            return Hike(response.body.name, response.body.trailStatus, response.body.parkingLot,response.body.bearSightings)
     //render hike view 
 
         }
