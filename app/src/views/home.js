@@ -2,6 +2,7 @@ import React from "react";
 import { VStack, Input, Button, IconButton, Icon, Text, NativeBaseProvider, Center, Box } from "native-base";
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import ShowSearches from "../../../backend/search";
 
 
 function SearchBar(){
@@ -19,14 +20,17 @@ function SearchBar(){
           _web={{
             _focus: { borderColor: 'muted.300', style: { boxShadow: 'none' } },
             }}
-          InputLeftElement={<Icon size='sm' ml={2} size={5} color="gray.400" as={<Ionicons name="ios-search" />} />}
+          InputLeftElement={<Icon size='sm' ml={2} size={5} color="gray.400" as={<Ionicons name="ios-search" />}
+          onPress = {() => {
+            {ShowSearches}
+          }} />}
         />
       </VStack>
       </VStack>
   )
 }
 
-export default function () {
+export default function() {
   return (
     <NativeBaseProvider>
       <Center flex={1} px={2}>

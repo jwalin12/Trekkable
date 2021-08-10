@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const hikesRouter = require('./routes/hikes')
-require('dotenv').config();
+const hikesRouter = require('./routes/hikes');
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+
 
 
 const app = express();

@@ -1,5 +1,6 @@
 const Hike = require('../models/hike.model');
-
+var express = require('express');
+var router = express();
 
 router.route('/').get((req,res) => {
     Hike.find()
@@ -19,8 +20,8 @@ router.route('/add').post((req,res) => {
 
 })
 
-router.route('/:name').post((req,res) => {
-    const hikeName = req.body.name;
+router.route('/:name').get((req,res) => {
+    const hikeName = req.params.name;
     Hike.find({name : {hikeName}})
     .then(hike => res.json(hike))
     .catch(err => res.status(400).json('Error: '+err));
