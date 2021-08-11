@@ -4,38 +4,39 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import ShowSearches from "../../../backend/search";
 
+import { SearchBar } from 'react-native-elements';
+import { History } from "history";
+import SearchForHikeHandler from "../../../backend/eventHandlers";
+import {createMemoryHistory} from 'history';
+import { View } from "react-native";
 
-function SearchBar(){
-  return (
-    <VStack space={8} width="100%">
-      <VStack width="100%" space={2}>
-        <Input
-          placeholder="Find your hike..."
-          variant="filled"
-          width="100%"
-          bg="gray.200"
-          borderRadius={10}
-          py={1}
-          px={2}
-          _web={{
-            _focus: { borderColor: 'muted.300', style: { boxShadow: 'none' } },
-            }}
-          InputLeftElement={<Icon size='sm' ml={2} size={5} color="gray.400" as={<Ionicons name="ios-search" />}
-          onPress = {() => {
-            {ShowSearches}
-          }} />}
-        />
-      </VStack>
-      </VStack>
-  )
+export default class Home extends React.Component {
+  state = {
+    search: '',
+  };
+
+  updateSearch = (search) => {
+    this.setState({ search });
+  };
+
+  render() {
+    const { search } = this.state;
+    let history = createMemoryHistory();
+
+    return (
+      <NativeBaseProvider>
+              <SearchBar
+        placeholder="Type Here..."
+        onChangeText={this.updateSearch}
+        value={search}
+
+      />
+      <Button onPress= {history.push("hike/".concat(this.state.text))}>
+        Search
+      </Button>
+      </NativeBaseProvider>
+
+    );
+  }
 }
 
-export default function() {
-  return (
-    <NativeBaseProvider>
-      <Center flex={1} px={2}>
-        <SearchBar/>
-      </Center>
-    </NativeBaseProvider>
-  );
-}

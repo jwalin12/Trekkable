@@ -2,9 +2,9 @@ import axios from 'axios';
 import EmptyHike from '../app/src/views/emptyHike';
 import Hike from '../app/src/views/hike';
 
-const SearchForHikeHandler = (input) => {
+function SearchForHikeHandler({match}) {
     //make request to get hike info
-    axios.get(process.env.SERVER_URI + "/hikes/"+input)
+    axios.get(process.env.SERVER_URI + "/hikes/".concat(match.params.val))
     .then(response => {
         if (response.status == 400) {
             
