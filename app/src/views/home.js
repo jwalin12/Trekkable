@@ -5,38 +5,65 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import ShowSearches from "../../../backend/search";
 
 import { SearchBar } from 'react-native-elements';
+import { useState } from "react";
 import { History } from "history";
 import SearchForHikeHandler from "../../../backend/eventHandlers";
-import {createMemoryHistory} from 'history';
+import { useHistory } from 'react-router-dom';
+import {createBrowserHistory, createHashHistory, createMemoryHistory} from 'history';
 import { View } from "react-native";
+import {Link} from 'react-router-native'; 
+import { ThemeProvider } from "styled-components";
+import { HomeWork } from "@material-ui/icons";
 
-export default class Home extends React.Component {
-  state = {
-    search: '',
-  };
-
-  updateSearch = (search) => {
-    this.setState({ search });
-  };
-
-  render() {
-    const { search } = this.state;
-    let history = createMemoryHistory();
-
-    return (
-      <NativeBaseProvider>
-              <SearchBar
-        placeholder="Type Here..."
-        onChangeText={this.updateSearch}
-        value={search}
-
-      />
-      <Button onPress= {history.push("hike/".concat(this.state.text))}>
-        Search
-      </Button>
-      </NativeBaseProvider>
-
-    );
+const theme = {
+  Button: {
+    buttonStyle: [
+      {
+        backgroundColor: "green",
+      }
+    ]
   }
+
+
+}
+function Home() {
+
+  const [search, setSearch] = useState('');
+
+  function searchFilterFunction(text) {
+    if (text) {
+  //make backend request
+  axios.get(process.env.SERVER_URI).then(
+    (response) => response.filter(
+      (val) =>  {if (val.name.toLowerCase().includes(text.toLowerCase())) {
+        return val;
+      }
+    }
+    )
+    
+  )
+  //TODO:cacheing
+
+    }
+
+    setSearch(text);
+
+  };
+
+    let history =createBrowserHistory() ;
+
+      return (
+  <ThemeProvider theme = {theme}>
+  <SearchBar
+          placeholder="Type Here..."
+          onChangeText={this.searchFilterFunction(search)}
+          value={search}
+        />
+
+  </ThemeProvider>  
+
+      );
+    
 }
 
+export default Home;

@@ -10,23 +10,26 @@ import {NativeBaseProvider,Box, Text,Pressable,Heading,IconButton,Icon, HStack, 
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { MaterialIcons,Ionicons, AntDesign } from '@expo/vector-icons';
 import Home from './app/src/views/home';
-import { NativeRouter, Route } from 'react-router-native';
+import { Link, NativeRouter, Route,Switch } from 'react-router-native';
 import SearchForHikeHandler from './backend/eventHandlers';
 import { AppRegistry } from 'react-native';
+import SearchBar from './app/src/components/SearchBar';
 
 export default function App() {
   return (
-    <div>
     <NativeRouter>
-      
-      <Route exact path = "/no" component = {Home}></Route>
-      <Route exact path = "/hello" render = {({ match }) => SearchForHikeHandler(match)
+      <Switch>
+      <Route exact path = "/" render = {Home}></Route>
+      <Route exact path = "/hike/:val" render = {({ match }) => SearchForHikeHandler(match)
       }></Route>
+      </Switch>
     </NativeRouter>
-     
-     </div>
+
+    
+
+
+    
   )
   
 }
 
-AppRegistry.registerComponent("MyApp", () => App);
