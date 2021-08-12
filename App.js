@@ -19,16 +19,11 @@ export default function App() {
   return (
     <NativeRouter>
       <Switch>
-      <Route exact path = "/" render = {Home}></Route>
+      <Route exact path = "/" component = {Home}></Route>
       <Route exact path = "/hike/:val" render = {({ match }) => SearchForHikeHandler(match)
       }></Route>
       </Switch>
     </NativeRouter>
-
-    
-
-
-    
   )
   
 }

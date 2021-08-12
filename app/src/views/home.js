@@ -5,7 +5,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import ShowSearches from "../../../backend/search";
 
 import { SearchBar } from 'react-native-elements';
-import { useState } from "react";
 import { History } from "history";
 import SearchForHikeHandler from "../../../backend/eventHandlers";
 import { useHistory } from 'react-router-dom';
@@ -13,7 +12,7 @@ import {createBrowserHistory, createHashHistory, createMemoryHistory} from 'hist
 import { View } from "react-native";
 import {Link} from 'react-router-native'; 
 import { ThemeProvider } from "styled-components";
-import { HomeWork } from "@material-ui/icons";
+import JSONDATA from "./mockdata/mockHike.json"
 
 const theme = {
   Button: {
@@ -26,44 +25,57 @@ const theme = {
 
 
 }
-function Home() {
 
-  const [search, setSearch] = useState('');
 
-  function searchFilterFunction(text) {
-    if (text) {
-  //make backend request
-  axios.get(process.env.SERVER_URI).then(
-    (response) => response.filter(
-      (val) =>  {if (val.name.toLowerCase().includes(text.toLowerCase())) {
-        return val;
-      }
-    }
-    )
-    
-  )
-  //TODO:cacheing
 
-    }
-
-    setSearch(text);
-
+export default class Home extends React.Component {
+  state = {
+    search: '',
   };
 
+  
+
+  updateSearch = (search) => {
+    this.setState({search });
+  };
+
+  searchFilterFunction(text) {
+      if (text) {
+    //make backend request
+    JSONDATA.filter(
+        (val) =>  {if (val.name.toLowerCase().includes(text.toLowerCase())) {
+          return val;
+        }
+      }
+      );
+    //TODO:cacheing
+
+    this.setState({text})
+  
+      }
+
+
+    
+  }
+
+  render() {
+    const { search } = this.state;
     let history =createBrowserHistory() ;
 
-      return (
-  <ThemeProvider theme = {theme}>
-  <SearchBar
-          placeholder="Type Here..."
-          onChangeText={this.searchFilterFunction(search)}
-          value={search}
-        />
+    return (
+<ThemeProvider theme = {theme}>
+<SearchBar
+        placeholder="Type Here..."
+        onChangeText={this.searchFilterFunction(search)}
+        value={search}
+      />
 
-  </ThemeProvider>  
+</ThemeProvider>
 
-      );
-    
+
+            
+
+    );
+  }
 }
 
-export default Home;
