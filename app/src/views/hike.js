@@ -11,8 +11,12 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import { MaterialIcons,Ionicons, AntDesign } from '@expo/vector-icons';
 import { right } from 'styled-system';
 
-export default function Hike(hikeName, trailStatus, parkingLot, bearSightings) {
+export default function Hike() {
     const [mode, setMode] = useState('Basic');
+    hikeName = props.hikeName;
+    trailStatus = props.trailStatus;
+    parkingLot = props.parkingLot;
+    bearSightings = props.bearSightings;
 
     return (
       <NativeBaseProvider >

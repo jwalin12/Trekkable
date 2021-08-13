@@ -3,11 +3,14 @@ import React from 'react';
 import { RecentActorsRounded, SpeedRounded } from '@material-ui/icons';
 import SearchBar from 'react-native-elements/dist/searchbar/SearchBar-ios';
 import { FlatList,TouchableOpacity,Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import { text } from 'dom-helpers';
 
 const Item = ({ item}) => (
-    <TouchableOpacity style={[styles.item]}>
-      <Text style={[styles.title]}>{item.name}</Text>
+    <TouchableOpacity style={[styles.item]} onPress= { () =>  this.props.navigation.}>
+    
+      <Text to={to} style={[styles.title]}>{item.name}</Text>
     </TouchableOpacity>
   );
 
@@ -15,6 +18,7 @@ const renderItem = ({item}) => {
     return (
       <Item 
       item = {item}
+      navigation={}
      >
 
       </Item>
@@ -36,6 +40,11 @@ const styles= {
   }
 
 
+function HomeScreen({navigation}) {
+    return <HikeSearchView data = {props.data} navigation = {props.navigation}></HikeSearchView>
+}
+
+
 
 class HikeSearchView extends React.Component {
 
@@ -45,6 +54,7 @@ class HikeSearchView extends React.Component {
             search:'',
             filteredData:this.props.data,
             allData:this.props.data,
+            navigation:this.props.navigation,
         }
     }
 
@@ -93,7 +103,7 @@ class HikeSearchView extends React.Component {
            </SearchBar>\
            <FlatList
            data = {filteredData}
-           renderItem = {renderItem}>
+           renderItem = {renderItem(this.navigation)}>
            </FlatList>
             </div>
 
