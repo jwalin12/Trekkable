@@ -103,7 +103,7 @@ class HikeSearchView extends React.Component {
            </SearchBar>\
            <FlatList
            data = {filteredData}
-           renderItem = {renderItem(this.navigation)}>
+           renderItem = {renderItem}>
            </FlatList>
             </div>
 
