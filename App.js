@@ -1,30 +1,66 @@
+import React, { useState} from 'react';
+import { TouchableOpacity, FlatList,Text }from 'react-native';
+import { NativeRouter } from 'react-router-native';
+import logo from './app/src/logo.svg'
+import './app/src/App.css'
+import Search from './app/src/views/search';
+import Announcer from './app/src/views/announcer';
+import posts from './app/src/views/mockdata/mockHike.json';
+import { FormatPaint } from '@material-ui/icons';
+import HikeSearchView from './app/src/views/search';
+const filterPosts = (posts, query) => {
+  if (!query) {
+      return posts;
+  }
 
-import React, { useState } from 'react';
-import {
-    Dimensions,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+  return posts.filter((post) => {
+      const postName = post.name.toLowerCase();
+      return postName.includes(query);
+  });
+};
 
-import {NativeBaseProvider,Box, Text,Pressable,Heading,IconButton,Icon, HStack, Avatar } from 'native-base';
-import { SwipeListView } from 'react-native-swipe-list-view';
-import { MaterialIcons,Ionicons, AntDesign } from '@expo/vector-icons';
-import Home from './app/src/views/home';
-import { Link, NativeRouter, Route,Switch } from 'react-router-native';
-import SearchForHikeHandler from './backend/eventHandlers';
-import { AppRegistry } from 'react-native';
-import SearchBar from './app/src/components/SearchBar';
+const App = () => {
+  const { search } = window.location;
+  const query = new URLSearchParams(search).get('s');
+  const [searchQuery, setSearchQuery] = useState(query || '');
+  const filteredPosts = filterPosts(posts, searchQuery);
 
-export default function App() {
+  const styles= {
+    title: {
+      fontSize:16
+    },
+    item:{
+      padding: 20,
+      marginVertical: 8,
+      marginHorizontal: 16,
+
+    },
+
+
+  }
+
+  const Item = ({ item}) => (
+    <TouchableOpacity style={[styles.item]}>
+      <Text style={[styles.title]}>{item.name}</Text>
+    </TouchableOpacity>
+  );
+
+  const renderItem = ({item}) => {
+    return (
+      <Item 
+      item = {item}
+     >
+      </Item>
+    )
+  }
+
   return (
-    <NativeRouter>
-      <Switch>
-      <Route exact path = "/" component = {Home}></Route>
-      <Route exact path = "/hike/:val" render = {({ match }) => SearchForHikeHandler(match)
-      }></Route>
-      </Switch>
-    </NativeRouter>
-  )
-  
-}
+          <div className="App">
+            <HikeSearchView data = {posts}></HikeSearchView>
 
+          </div>
+
+  );
+};
+
+export default App;
