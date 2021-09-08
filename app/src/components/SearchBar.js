@@ -1,8 +1,5 @@
 import React, { useDebugValue } from 'react';
-import {ThemeProvider} from 'react-native-elements';
 import { SearchOutlined} from '@ant-design/icons';
-import { AntDesign } from '@expo/vector-icons';
-import SearchForHikeHandler from '../../../backend/eventHandlers';
 
 
 function SearchBar({placeholder, data}) {

@@ -1,29 +1,15 @@
-import { useHistory } from 'react-router-dom';
 import React from 'react';
-import { RecentActorsRounded, SpeedRounded } from '@material-ui/icons';
 import SearchBar from 'react-native-elements/dist/searchbar/SearchBar-ios';
 import { FlatList,TouchableOpacity,Text } from 'react-native';
+import { useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import { text } from 'dom-helpers';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Item = ({ item}) => (
-    <TouchableOpacity style={[styles.item]} onPress= { () =>  this.props.navigation.}>
-    
-      <Text to={to} style={[styles.title]}>{item.name}</Text>
-    </TouchableOpacity>
-  );
 
-const renderItem = ({item}) => {
-    return (
-      <Item 
-      item = {item}
-      navigation={}
-     >
 
-      </Item>
-    )
-  }
+
 
 const styles= {
     title: {
@@ -40,75 +26,58 @@ const styles= {
   }
 
 
-function HomeScreen({navigation}) {
+function HomeScreen({navigation, params}) {
     return <HikeSearchView data = {props.data} navigation = {props.navigation}></HikeSearchView>
 }
 
+function HikeSearchView (props) {
+    const navigation = useNavigation();
 
-
-class HikeSearchView extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            search:'',
-            filteredData:this.props.data,
-            allData:this.props.data,
-            navigation:this.props.navigation,
-        }
-    }
-
-    updateSearch(event) {
-        this.setState({
-            search:event.target.value.substr(0,20)
-        });
-
-    }
-
-    updateFilteredData(newData) {
-
-        this.setState({
-            filteredData:newData
-        });
-
-    }
-
-
-
+    const [search, updateSearch] = useState('');
+    const allData =props.data;
+    const [filteredData, updateFilteredData] = useState(allData);
     
-    searchHandler = (event) => {
-        let text = event.target.value;
-        this.updateSearch(text);
-        this.updateFilteredData(this.state.allData.filter(
-            (hike) => {
-                return hike.name.toLowercase().indexOf(text.toLowerCase()) !== -1;
-            }
-        ));
+    const Item = ({ item}) => (
+      <TouchableOpacity style={[styles.item]} onPress= {() =>  navigation.navigate('Hike', {hikeData:item})}>
+        <Text style={[styles.title]}>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  
+  const renderItem = ({item}) => {
+      return (
+        <Item 
+        item = {item}
+       >
+        </Item>
+      )
     }
-    
 
-    render () {
-        let filteredData = this.state.allData.filter(
-            (hike) => {
-                return hike.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
-            }
-        )
+    const searchHandler = (event) => {
+      let text = event.target.value;
+      updateSearch(text);
+      updateFilteredData(allData.filter(
+          (hike) => {
+              return hike.name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+          }
+      ));
+  }
 
-        return (
-            <div>
-           <SearchBar
-           placeholder='Find your hike...'
-           onChange= {this.updateSearch.bind(this)}
-           value = {this.state.search}>
-           </SearchBar>\
-           <FlatList
-           data = {filteredData}
-           renderItem = {renderItem}>
-           </FlatList>
-            </div>
+
+    return (
+        <div>
+        <SearchBar
+        placeholder='Find your hike...'
+        onChange= {searchHandler}
+        value = {search}>
+        </SearchBar>
+        <FlatList
+        data = {filteredData}
+        renderItem = {renderItem}>
+        </FlatList>
+        </div>
 
         )
-    }
+    
 
 
 

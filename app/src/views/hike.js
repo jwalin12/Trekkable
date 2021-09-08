@@ -7,22 +7,20 @@ import {
 } from 'react-native';
 
 import {NativeBaseProvider,Box, Text,Pressable,Heading,IconButton,Icon, HStack, Avatar, VStack } from 'native-base';
-import { SwipeListView } from 'react-native-swipe-list-view';
-import { MaterialIcons,Ionicons, AntDesign } from '@expo/vector-icons';
-import { right } from 'styled-system';
 
-export default function Hike() {
+export default function HikeScreen({route, navigation}) {
     const [mode, setMode] = useState('Basic');
-    hikeName = props.hikeName;
-    trailStatus = props.trailStatus;
-    parkingLot = props.parkingLot;
-    bearSightings = props.bearSightings;
+    const { hikeData } = route.params;
+    let hikeName = hikeData.name;
+    let trailStatus = hikeData.trailStatus;
+    let parkingLot = hikeData.parkingLot;
+    let bearSightings = hikeData.bearSightings;
 
     return (
       <NativeBaseProvider >
         <Box textAlign="center" bg= 'white' flex= {1} safeAreaTop>
           <Heading my={6} textAlign="center" size="lg">{hikeName}</Heading>
-            <Basic trailStatus = {trailStatus} parkingLot = {parkingLot} bearSightings = {bearSightings} />
+            <Basic trailStatus = {{status: trailStatus}} parkingLot = {parkingLot} bearSightings = {bearSightings} />
         </Box>
         </NativeBaseProvider>
     );
@@ -42,10 +40,8 @@ function genEntry({key, value}) {
   );
 }
 
-function Basic() {
-  const tableEntries = props.map(genEntry)
+function Basic(props) {
   return (<VStack>
-    {tableEntries}
     </VStack>);
 
 }
