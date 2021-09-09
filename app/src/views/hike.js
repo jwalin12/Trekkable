@@ -6,7 +6,8 @@ import {
     View,
 } from 'react-native';
 
-import {NativeBaseProvider,Box, Text,Pressable,Heading,IconButton,Icon, HStack, Avatar, VStack } from 'native-base';
+import {NativeBaseProvider,Box,Heading, HStack} from 'native-base';
+import {DataTable} from 'react-native-paper';
 
 export default function HikeScreen({route, navigation}) {
     const [mode, setMode] = useState('Basic');
@@ -20,7 +21,7 @@ export default function HikeScreen({route, navigation}) {
       <NativeBaseProvider >
         <Box textAlign="center" bg= 'white' flex= {1} safeAreaTop>
           <Heading my={6} textAlign="center" size="lg">{hikeName}</Heading>
-            <Basic trailStatus = {{status: trailStatus}} parkingLot = {parkingLot} bearSightings = {bearSightings} />
+            <HikeTable trailStatus={trailStatus} parkingLot={parkingLot} bearSightings={bearSightings} />
         </Box>
         </NativeBaseProvider>
     );
@@ -40,9 +41,35 @@ function genEntry({key, value}) {
   );
 }
 
-function Basic(props) {
-  return (<VStack>
-    </VStack>);
+function HikeTable(props) {
+  return (
+    <DataTable>
+        <DataTable.Row>
+        <DataTable.Cell>
+          {"Trail Status"}
+        </DataTable.Cell>
+        <DataTable.Cell>
+          {props.trailStatus}
+        </DataTable.Cell>
+    </DataTable.Row>
+    <DataTable.Row>
+        <DataTable.Cell>
+          {"Parking Lot"}
+        </DataTable.Cell>
+        <DataTable.Cell>
+          {props.parkingLot}
+        </DataTable.Cell>
+    </DataTable.Row>
+    <DataTable.Row>
+        <DataTable.Cell>
+          {"Bear Sightings"}
+        </DataTable.Cell>
+        <DataTable.Cell>
+          {props.bearSightings}
+        </DataTable.Cell>
+    </DataTable.Row> 
+    </DataTable>
+  )
 
 }
 
