@@ -4,8 +4,9 @@ import {
     Dimensions,
     TouchableOpacity,
     View,
+    Button
 } from 'react-native';
-
+import inputPopup from './inputPopup';
 import {NativeBaseProvider,Box,Heading, HStack} from 'native-base';
 import {DataTable} from 'react-native-paper';
 
@@ -46,6 +47,7 @@ function HikeTable(props) {
     <DataTable>
         <DataTable.Row>
         <DataTable.Cell>
+          <TouchableOpacity title = {"Trail Status"} onPress = {inputPopup("Trail Status")}></TouchableOpacity>
           {"Trail Status"}
         </DataTable.Cell>
         <DataTable.Cell>
