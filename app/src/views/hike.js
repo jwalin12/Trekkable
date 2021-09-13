@@ -47,7 +47,7 @@ function HikeTable(props) {
     <DataTable>
         <DataTable.Row>
         <DataTable.Cell>
-          <TouchableOpacity title = {"Trail Status"} onPress = {inputPopup("Trail Status")}></TouchableOpacity>
+          <TouchableOpacity title = {"Trail Status"} onPress = {() => inputPopup("Trail Status")}></TouchableOpacity>
           {"Trail Status"}
         </DataTable.Cell>
         <DataTable.Cell>
