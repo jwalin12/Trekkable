@@ -4,9 +4,6 @@ import { FlatList,TouchableOpacity,Text } from 'react-native';
 import { useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 
 
 

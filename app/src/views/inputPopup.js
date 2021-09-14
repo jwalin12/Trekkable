@@ -1,27 +1,28 @@
+import { ViewAgendaTwoTone, Visibility } from "@material-ui/icons";
 import React, { useState } from "react";
-import { View, StyleSheet, Button, Alert } from "react-native";
-import Dialog from "react-native-dialog";
+import { View } from "react-native";
+import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 
 
 
-const inputPopup = (title) => {
+function inputPopup(props) {
 
+  if (!props.open) {
+    return null;
 
-    return (
-        <View style={styles.container}>
-        <Button title="Show dialog" onPress={showDialog} />
-        <Dialog.Container visible={visible}>
-          <Dialog.Title>Account delete</Dialog.Title>
-          <Dialog.Description>
-            Do you want to delete this account? You cannot undo this action.
-          </Dialog.Description>
-          <Dialog.Button label="Cancel" onPress={handleCancel} />
-          <Dialog.Button label="Delete" onPress={handleDelete} />
-        </Dialog.Container>
-      </View>
-    );
+  }
 
-
+  return ReactDom.createPortal(
+    <>
+      <div style={OVERLAY_STYLES} />
+      <div style={MODAL_STYLES}>
+        <button onClick={props.onClose}>Close</button>
+        {children}
+      </div>
+    </>,
+    document.getElementById('portal')
+  )
+  
 }
 
 export default inputPopup;
