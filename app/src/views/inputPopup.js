@@ -1,27 +1,45 @@
 import { ViewAgendaTwoTone, Visibility } from "@material-ui/icons";
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
+import { Button, Paragraph, Dialog, Portal, Provider, Modal } from 'react-native-paper';
 
 
+const MODAL_STYLES = {
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  backgroundColor: '#FFF',
+  padding: '50px',
+  zIndex: 1000
+}
 
-function inputPopup(props) {
+const OVERLAY_STYLES = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0, 0, 0, .7)',
+  zIndex: 1000
+}
 
-  if (!props.open) {
-    return null;
+function inputPopup(visible,onClose ) {
 
-  }
+  // if (!visible) {
+  //   return null;
+
+  // }
 
   return ReactDom.createPortal(
     <>
       <div style={OVERLAY_STYLES} />
       <div style={MODAL_STYLES}>
-        <button onClick={props.onClose}>Close</button>
-        {children}
+        <Modal onClick={onClose} visible={visible}>Close</Modal>
       </div>
     </>,
     document.getElementById('portal')
-  )
+  );
   
 }
 

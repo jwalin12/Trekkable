@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import inputPopup from './inputPopup';
 import {NativeBaseProvider,Box,Heading, HStack} from 'native-base';
-import {DataTable, Modal} from 'react-native-paper';
+import {DataTable, Modal, Portal, Provider} from 'react-native-paper';
 
 export default function HikeScreen({route, navigation}) {
     const [mode, setMode] = useState('Basic');
@@ -46,10 +46,12 @@ function HikeTable(props) {
   const [TrailStatusPopupVisible,setTrailStatusPopupVisible] = useState(false);
   const [ParkingLotStatusPopupVisible,setParkingLotPopupVisible] = useState(false);
   const [BearSightingStatusPopupVisible,setBearStatusPopupVisible] = useState(false);
-
+  const containerStyle = {backgroundColor: 'white', padding: 100};
 
 
   return (
+
+
     <DataTable>
     <DataTable.Row>
     <DataTable.Cell>
@@ -59,10 +61,9 @@ function HikeTable(props) {
     <DataTable.Cell>
       {props.trailStatus}
     </DataTable.Cell>
-    <inputPopup visible = {TrailStatusPopupVisible} onClose = {setTrailStatusPopupVisible(false)}>
-      {"Trail Status"}
-    </inputPopup>
+  
 </DataTable.Row>
+
 <DataTable.Row>
     <DataTable.Cell>
       {"Parking Lot"}
@@ -79,7 +80,27 @@ function HikeTable(props) {
       {props.bearSightings}
     </DataTable.Cell>
 </DataTable.Row> 
+<Provider>
+  <Portal>
+<Modal visible = {TrailStatusPopupVisible} contentContainerStyle = {containerStyle}>
+  <Button icon="alpha-x-circle" mode="contained" color = "red" dark = "true" onPress = {() => setTrailStatusPopupVisible(false)}>Cancel</Button>
+</Modal>
+  </Portal>
+  <Portal>
+<Modal visible = {ParkingLotStatusPopupVisible} contentContainerStyle = {containerStyle}>
+  <Button icon="alpha-x-circle" mode="contained" color = "red" dark = "true" onPress = {() => setTrailStatusPopupVisible(false)}>Cancel</Button>
+</Modal>
+  </Portal>
+  <Portal>
+<Modal visible = {BearSightingStatusPopupVisible} contentContainerStyle = {containerStyle}>
+  <Button icon="alpha-x-circle" mode="contained" color = "red" dark = "true" onPress = {() => setTrailStatusPopupVisible(false)}>Cancel</Button>
+</Modal>
+  </Portal>
+  </Provider>
 </DataTable>
+
+
+
   );
 
 }
