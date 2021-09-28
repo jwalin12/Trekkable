@@ -1,16 +1,11 @@
 
-import React, { Fragment, useState } from 'react';
-import {
-    Dimensions,
-    TouchableOpacity,
-    View,
-    Button
-} from 'react-native';
-import inputPopup from './inputPopup';
-import {NativeBaseProvider,Box,Heading, HStack} from 'native-base';
-import {DataTable, Modal, Portal, Provider} from 'react-native-paper';
+import React, { useState } from 'react';
 
-export default function HikeScreen({route, navigation}) {
+import { DataTable, Provider, View, Button, Modal, Portal } from 'react-native-paper';
+import { NativeBaseProvider, Heading, Box } from 'native-base';
+
+
+export default function HikeScreen({ route }) {
     const [mode, setMode] = useState('Basic');
     const { hikeData } = route.params;
     let hikeName = hikeData.name;
@@ -19,27 +14,13 @@ export default function HikeScreen({route, navigation}) {
     let bearSightings = hikeData.bearSightings;
 
     return (
-      <NativeBaseProvider >
-        <Box textAlign="center" bg= 'white' flex= {1} safeAreaTop>
+      <NativeBaseProvider>
+           <Box textAlign="center" bg= 'white' flex= {1} safeAreaTop>
           <Heading my={6} textAlign="center" size="lg">{hikeName}</Heading>
             <HikeTable trailStatus={trailStatus} parkingLot={parkingLot} bearSightings={bearSightings} />
         </Box>
-        </NativeBaseProvider>
+      </NativeBaseProvider>
     );
-}
-
-function genEntry({key, value}) {
-  return (
-    <HStack>
-    <Center>
-      {key}
-    </Center>
-    <Center>
-      {value}
-    </Center>
-  </HStack>
-
-  );
 }
 
 function HikeTable(props) {
@@ -50,23 +31,19 @@ function HikeTable(props) {
 
 
   return (
-
-
+    
     <DataTable>
     <DataTable.Row>
     <DataTable.Cell>
-      <Button title = {"Trail Status"} onPress = {() => setTrailStatusPopupVisible(true)}></Button>
-      {"Trail Status"}
+      <Button color = 'green' dark = 'true' mode= "text" onPress = {() => setTrailStatusPopupVisible(true)}> Trail Status</Button>
     </DataTable.Cell>
     <DataTable.Cell>
       {props.trailStatus}
     </DataTable.Cell>
-  
 </DataTable.Row>
-
-<DataTable.Row>
+  <DataTable.Row>
     <DataTable.Cell>
-      {"Parking Lot"}
+    <Button color = 'green' dark = 'true' mode= "text" onPress = {() => setParkingLotPopupVisible(true)}> Parking Lot </Button>
     </DataTable.Cell>
     <DataTable.Cell>
       {props.parkingLot}
@@ -74,7 +51,7 @@ function HikeTable(props) {
 </DataTable.Row>
 <DataTable.Row>
     <DataTable.Cell>
-      {"Bear Sightings"}
+    <Button color = 'green' dark = 'true' mode= "text" onPress = {() => setBearStatusPopupVisible(true)}>  Bear Sightings </Button>
     </DataTable.Cell>
     <DataTable.Cell>
       {props.bearSightings}
@@ -88,18 +65,16 @@ function HikeTable(props) {
   </Portal>
   <Portal>
 <Modal visible = {ParkingLotStatusPopupVisible} contentContainerStyle = {containerStyle}>
-  <Button icon="alpha-x-circle" mode="contained" color = "red" dark = "true" onPress = {() => setTrailStatusPopupVisible(false)}>Cancel</Button>
+  <Button icon="alpha-x-circle" mode="contained" color = "red" dark = "true" onPress = {() => setParkingLotPopupVisible(false)}>Cancel</Button>
 </Modal>
   </Portal>
   <Portal>
 <Modal visible = {BearSightingStatusPopupVisible} contentContainerStyle = {containerStyle}>
-  <Button icon="alpha-x-circle" mode="contained" color = "red" dark = "true" onPress = {() => setTrailStatusPopupVisible(false)}>Cancel</Button>
+  <Button icon="alpha-x-circle" mode="contained" color = "red" dark = "true" onPress = {() => setBearStatusPopupVisible(false)}>Cancel</Button>
 </Modal>
   </Portal>
   </Provider>
 </DataTable>
-
-
 
   );
 
