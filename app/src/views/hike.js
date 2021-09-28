@@ -73,12 +73,16 @@ function HikeTable(props) {
   <Portal>
 <Modal visible = {ParkingLotStatusPopupVisible} contentContainerStyle = {containerStyle}>
 {parkingLotStatus}
+<TextInput label = "Updates?">
+    </TextInput>
   <Button icon="alpha-x-circle" mode="contained" color = "red" dark = "true" onPress = {() => setParkingLotPopupVisible(false)}>Cancel</Button>
 </Modal>
   </Portal>
   <Portal>
 <Modal visible = {BearSightingStatusPopupVisible} contentContainerStyle = {containerStyle}>
   {bearSightingsStatus}
+  <TextInput label = "Updates?">
+    </TextInput>
   <Button icon="alpha-x-circle" mode="contained" color = "red" dark = "true" onPress = {() => setBearStatusPopupVisible(false)}>Cancel</Button>
 </Modal>
   </Portal>
